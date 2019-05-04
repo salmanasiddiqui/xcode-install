@@ -250,16 +250,21 @@ HELP
         `umount "/Volumes/Xcode"`
       end
 
+      puts 'xcode extracted'
       xcode = InstalledXcode.new(xcode_path)
 
       unless xcode.verify_integrity
         `sudo rm -rf #{xcode_path}`
         return
       end
+      puts 'integrity verified'
 
       enable_developer_mode
+      puts 'developer mode enabled'
       xcode.approve_license
+      puts 'license approved'
       xcode.install_components
+      puts 'components installed'
 
       if switch
         `sudo rm -f #{SYMLINK_PATH}` unless current_symlink.nil?
